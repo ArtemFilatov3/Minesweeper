@@ -36,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
           paintCell.innerHTML = cell.number;
         }
         paintCell.addEventListener("click", () => {
-          handleClick(cell, indexRow, indexColumn);
-          paintCell.classList.add('opened');
+          handleClick(cell, indexRow, indexColumn); 
           console.log(paintCell)
         });
         paintRow.append(paintCell);
