@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const gameBoard = [];
-  const BOMBS_COUNT = 10;
+  let BOMBS_COUNT = 10;
   const WIDTH = 8;
   const HEIGTH = 8;
   function generateBoard(width, heigth) {
@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       board.append(paintRow);
     });
+   
     document.body.append(board);
   }
 
@@ -105,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
   generateBoard(WIDTH, HEIGTH);
   genarateBombs();
   setNumbersInCell();
