@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("board")?.remove();
     const board = document.createElement("div");
     board.setAttribute("id", "board");
-
     gameBoard.forEach((row, indexRow) => {
       let paintRow = document.createElement("div");
       paintRow.id = "row";
@@ -59,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let paintCell = document.createElement("div");
         paintCell.id = "cell";
         paintCell.addEventListener("click", () => {
+          // winCondition(cell)
           if (paintCell.innerHTML == "🚩") {
             paintCell.removeEventListener();
           }
@@ -68,14 +68,20 @@ document.addEventListener("DOMContentLoaded", () => {
           "contextmenu",
           (e) => {
             e.preventDefault();
+            if (paintCell.innerHTML == "🚩") {
+              cell.isFlagged = false;
+              paintCell.innerHTML = "";
+              return false;
+            }
             if (!cell.isOpened) {
               cell.isFlagged = true;
               paintCell.innerHTML = "🚩";
+              // console.log(cell)
               return false;
             }
           },
           false
-        );  
+        );
         if (cell.isFlagged) {
           paintCell.innerHTML = "🚩";
         }
@@ -154,6 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+  // function winCondition(cell) {
+  //   if(cell.isFlagged && cell.isBombed){
+  //     alert('Success!!')
+  //   }
+  // }
 
   generateBoard(WIDTH, HEIGTH);
   genarateBombs();
