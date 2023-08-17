@@ -1,8 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const gameBoard = [];
+  let gameBoard = [];
   let BOMBS_COUNT = 10;
   const WIDTH = 8;
   const HEIGTH = 8;
+  const easy = document.querySelector("#easy");
+  const medium = document.querySelector("#medium");
+  const hard = document.querySelector("#Hard");
+  easy.addEventListener("click", () => {
+    BOMBS_COUNT = 3;
+     gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
+  medium.addEventListener("click", () => {
+    BOMBS_COUNT = 5;
+     gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
+  hard.addEventListener("click", () => {
+    BOMBS_COUNT = 10;
+     gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
+
   function generateBoard(width, heigth) {
     for (let row = 0; row < heigth; row++) {
       const rows = [];
@@ -45,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       board.append(paintRow);
     });
-   
+
     document.body.append(board);
   }
 
