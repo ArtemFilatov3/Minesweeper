@@ -65,44 +65,36 @@ document.addEventListener("DOMContentLoaded", () => {
     gameBoard.forEach((row, indexRow) => {
       row.forEach((cell, indexColumn) => {
         if (cell.isBombed) {
-          // 4-4
           if (
             gameBoard[indexRow - 1] &&
             gameBoard[indexRow - 1][indexColumn - 1]
           ) {
             gameBoard[indexRow - 1][indexColumn - 1].number += 1;
           }
-          // 4-5
           if (gameBoard[indexRow - 1] && gameBoard[indexRow - 1][indexColumn]) {
             gameBoard[indexRow - 1][indexColumn].number += 1;
           }
-          // 4-6
           if (
             gameBoard[indexRow - 1] &&
             gameBoard[indexRow - 1][indexColumn + 1]
           ) {
             gameBoard[indexRow - 1][indexColumn + 1].number += 1;
           }
-          // 5-4
           if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn - 1]) {
             gameBoard[indexRow][indexColumn - 1].number += 1;
           }
-          // 5-6
           if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn + 1]) {
             gameBoard[indexRow][indexColumn + 1].number += 1;
           }
-          // 6-4
           if (
             gameBoard[indexRow + 1] &&
             gameBoard[indexRow + 1][indexColumn - 1]
           ) {
             gameBoard[indexRow + 1][indexColumn - 1].number += 1;
           }
-          // 6-5
           if (gameBoard[indexRow + 1] && gameBoard[indexRow + 1][indexColumn]) {
             gameBoard[indexRow + 1][indexColumn].number += 1;
           }
-          // 6-6
           if (
             gameBoard[indexRow + 1] &&
             gameBoard[indexRow + 1][indexColumn + 1]
@@ -153,225 +145,4 @@ document.addEventListener("DOMContentLoaded", () => {
       paintBoard();
     }
   }
-
-  // if (cell.number == 0) {
-  //   cell.isOpened = true;
-  //   paintBoard();
-  //   if (
-  //     gameBoard[indexRow - 1] &&
-  //     gameBoard[indexRow - 1][indexColumn - 1]  // если строка или колонка не undefind то заходим в иф
-  //   ) {
-  //     gameBoard[indexRow - 1][indexColumn - 1].isOpened = true;
-  //   }
-  //   // 4-5
-  //   if (gameBoard[indexRow - 1] && gameBoard[indexRow - 1][indexColumn]) {
-  //     gameBoard[indexRow - 1][indexColumn].isOpened = true;
-  //   }
-  //   // 4-6
-  //   if (
-  //     gameBoard[indexRow - 1] &&
-  //     gameBoard[indexRow - 1][indexColumn + 1]
-  //   ) {
-  //     gameBoard[indexRow - 1][indexColumn + 1].isOpened = true;
-  //   }
-  //   // 5-4
-  //   if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn - 1]) {
-  //     gameBoard[indexRow][indexColumn - 1].isOpened = true;
-  //   }
-  //   // 5-6
-  //   if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn + 1]) {
-  //     gameBoard[indexRow][indexColumn + 1].isOpened = true;
-  //   }
-  //   // 6-4
-  //   if (
-  //     gameBoard[indexRow + 1] &&
-  //     gameBoard[indexRow + 1][indexColumn - 1]
-  //   ) {
-  //     gameBoard[indexRow + 1][indexColumn - 1].isOpened = true;
-  //   }
-  //   // 6-5
-  //   if (gameBoard[indexRow + 1] && gameBoard[indexRow + 1][indexColumn]) {
-  //     gameBoard[indexRow + 1][indexColumn].isOpened = true;
-  //   }
-  //   // 6-6
-  //   if (
-  //     gameBoard[indexRow + 1] &&
-  //     gameBoard[indexRow + 1][indexColumn + 1]
-  //   ) {
-  //     gameBoard[indexRow + 1][indexColumn + 1].isOpened = true;
-  //   }
-
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1  , indexColumn = indexColumn + 1)
-  // }
-
-  // if (
-  //   gameBoard[indexRow - 1] &&
-  //   gameBoard[indexRow - 1][indexColumn - 1]  // если строка или колонка не undefind то заходим в иф
-  // ) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn = indexColumn - 1)
-  //  }
-  // // 4-5
-  // if (gameBoard[indexRow - 1] && gameBoard[indexRow - 1][indexColumn]) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn)
-  // }
-  // // 4-6
-  // if (
-  //   gameBoard[indexRow - 1] &&
-  //   gameBoard[indexRow - 1][indexColumn + 1]
-  // ) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn = indexColumn + 1)
-  // }
-  // // 5-4
-  // if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn - 1]) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow, indexColumn = indexColumn - 1)
-  // }
-  // // 5-6
-  // if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn + 1]) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow, indexColumn = indexColumn - 1)
-  // }
-  // // 6-4
-  // if (
-  //   gameBoard[indexRow + 1] &&
-  //   gameBoard[indexRow + 1][indexColumn - 1]
-  // ) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn = indexColumn - 1)
-  // }
-  // // 6-5
-  // if (gameBoard[indexRow + 1] && gameBoard[indexRow + 1][indexColumn]) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn)
-  // }
-  // // 6-6
-  // if (
-  //   gameBoard[indexRow + 1] &&
-  //   gameBoard[indexRow + 1][indexColumn + 1]
-  // ) {
-  //   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn = indexColumn + 1)
-  // }
-
-  // if (
-  //   gameBoard[indexRow - 1] &&
-  //   gameBoard[indexRow - 1][indexColumn - 1] && !gameBoard[indexRow - 1][indexColumn - 1].isBombed  // если строка или колонка не undefind то заходим в иф
-  // ) {
-  //   gameBoard[indexRow - 1][indexColumn - 1].isOpened = true;
-  // }
-  // // 4-5
-  // if (gameBoard[indexRow - 1] && gameBoard[indexRow - 1][indexColumn] && !gameBoard[indexRow - 1][indexColumn].isBombed ) {
-  //   gameBoard[indexRow - 1][indexColumn].isOpened = true;
-  // }
-  // // 4-6
-  // if (
-  //   gameBoard[indexRow - 1] &&
-  //   gameBoard[indexRow - 1][indexColumn + 1]  && !gameBoard[indexRow - 1][indexColumn + 1].isBombed
-  // ) {
-  //   gameBoard[indexRow - 1][indexColumn + 1].isOpened = true;
-  // }
-  // // 5-4
-  // if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn - 1] && !gameBoard[indexRow][indexColumn - 1].isBombed) {
-  //   gameBoard[indexRow][indexColumn - 1].isOpened = true;
-  // }
-  // // 5-6
-  // if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn + 1]  && !gameBoard[indexRow][indexColumn + 1].isBombed) {
-  //   gameBoard[indexRow][indexColumn + 1].isOpened = true;
-  // }
-  // // 6-4
-  // if (
-  //   gameBoard[indexRow + 1] &&
-  //   gameBoard[indexRow + 1][indexColumn - 1]  && !gameBoard[indexRow + 1][indexColumn - 1].isBombed
-  // ) {
-  //   gameBoard[indexRow + 1][indexColumn - 1].isOpened = true;
-  // }
-  // // 6-5
-  // if (gameBoard[indexRow + 1] && gameBoard[indexRow + 1][indexColumn]  && !gameBoard[indexRow + 1][indexColumn].isBombed) {
-  //   gameBoard[indexRow + 1][indexColumn].isOpened = true;
-  // }
-  // // 6-6
-  // if (
-  //   gameBoard[indexRow + 1] &&
-  //   gameBoard[indexRow + 1][indexColumn + 1]  && !gameBoard[indexRow + 1][indexColumn + 1].isBombed
-  // ) {
-  //   gameBoard[indexRow + 1][indexColumn + 1].isOpened = true;
-  // }
-
-  // handleClick(gameBoard[indexRow][indexColumn], indexRow, indexColumn + 1)
 });
-
-// function handleClick(cell, indexRow, indexColumn) {
-//   console.log(indexRow,indexColumn)
-//   console.log(gameBoard[indexRow][indexColumn])
-//   if (cell.isBombed) {
-//     gameBoard.forEach((indexRow) => {
-//       indexRow.forEach((indexColumn) => {
-//         if (indexColumn.isBombed) {
-//           indexColumn.isOpened = true;
-//         }
-//       });
-//     });
-//     alert("Game Over");
-//     paintBoard();
-//     return;
-//   }
-//   if (cell.number) {
-//     cell.isOpened = true;
-//     paintBoard();
-//     return;
-//   }
-
-//   if (cell.number === 0) {
-//     cell.isOpened = true;
-//     paintBoard();
-//     if (
-//     gameBoard[indexRow - 1] &&
-//     gameBoard[indexRow - 1][indexColumn - 1]  // если строка или колонка не undefind то заходим в иф
-//   ) {
-//     gameBoard[indexRow - 1][indexColumn - 1].isOpened = true;
-//    handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn = indexColumn - 1)
-
-//  }
-// // 4-5
-//   if (gameBoard[indexRow - 1] && gameBoard[indexRow - 1][indexColumn]) {
-//     gameBoard[indexRow - 1][indexColumn].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn)
-// }
-// // 4-6
-//   if (
-//   gameBoard[indexRow - 1] &&
-//   gameBoard[indexRow - 1][indexColumn + 1]
-// ) {
-//   gameBoard[indexRow - 1][indexColumn + 1].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow - 1 , indexColumn = indexColumn + 1)
-// }
-// // 5-4
-//   if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn - 1]) {
-//     gameBoard[indexRow][indexColumn - 1].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow, indexColumn = indexColumn - 1)
-// }
-// // 5-6
-//   if (gameBoard[indexRow] && gameBoard[indexRow][indexColumn + 1]) {
-//     gameBoard[indexRow][indexColumn + 1].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow, indexColumn = indexColumn - 1)
-// }
-// // 6-4
-//   if (
-//   gameBoard[indexRow + 1] &&
-//   gameBoard[indexRow + 1][indexColumn - 1]
-// ) {
-//   gameBoard[indexRow + 1][indexColumn - 1].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn = indexColumn - 1)
-// }
-// // 6-5
-//   if (gameBoard[indexRow + 1] && gameBoard[indexRow + 1][indexColumn]) {
-//     gameBoard[indexRow + 1][indexColumn].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn)
-// }
-// // 6-6
-//   if (
-//   gameBoard[indexRow + 1] &&
-//   gameBoard[indexRow + 1][indexColumn + 1]
-// ) {
-//   gameBoard[indexRow + 1][indexColumn + 1].isOpened = true;
-//   handleClick(gameBoard[indexRow][indexColumn], indexRow = indexRow + 1 , indexColumn = indexColumn + 1)
-// }
-
-// }
-// }
-//   paintBoard();
