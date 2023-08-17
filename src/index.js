@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const hard = document.querySelector("#Hard");
   easy.addEventListener("click", () => {
     BOMBS_COUNT = 3;
-     gameBoard = [];
+    gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
     genarateBombs();
     setNumbersInCell();
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   medium.addEventListener("click", () => {
     BOMBS_COUNT = 5;
-     gameBoard = [];
+    gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
     genarateBombs();
     setNumbersInCell();
@@ -24,12 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   hard.addEventListener("click", () => {
     BOMBS_COUNT = 10;
-     gameBoard = [];
+    gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
     genarateBombs();
     setNumbersInCell();
     paintBoard();
   });
+  //  🚩
 
   function generateBoard(width, heigth) {
     for (let row = 0; row < heigth; row++) {
@@ -58,8 +59,26 @@ document.addEventListener("DOMContentLoaded", () => {
         let paintCell = document.createElement("div");
         paintCell.id = "cell";
         paintCell.addEventListener("click", () => {
+          if (paintCell.innerHTML == "🚩") {
+            paintCell.removeEventListener();
+          }
           handleClick(cell, indexRow, indexColumn);
         });
+        paintCell.addEventListener(
+          "contextmenu",
+          (e) => {
+            e.preventDefault();
+            if (!cell.isOpened) {
+              cell.isFlagged = true;
+              paintCell.innerHTML = "🚩";
+              return false;
+            }
+          },
+          false
+        );  
+        if (cell.isFlagged) {
+          paintCell.innerHTML = "🚩";
+        }
         if (cell.isBombed && cell.isOpened) {
           paintCell.innerHTML = "x";
         }
@@ -69,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cell.isOpened) {
           paintCell.style.backgroundColor = "white";
         }
+
         paintRow.append(paintCell);
       });
       board.append(paintRow);
