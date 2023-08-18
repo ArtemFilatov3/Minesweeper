@@ -28,6 +28,7 @@ body {
   background-color: whitesmoke;
   border: wheat;
   margin: 5px;
+  cursor: pointer;
 }
 .buttons-wrapper { 
   display: flex;
@@ -41,6 +42,7 @@ body {
   height: 50px;
   background-color: white;
   border: none;
+  cursor: pointer;
 }
 .smile{
   background-color: white;
