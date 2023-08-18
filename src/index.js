@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const medium = document.querySelector("#medium");
   const hard = document.querySelector("#Hard");
   const newGame = document.querySelector(".smile");
-  const smile = document.querySelector('.smileImg') 
-  
-  newGame.addEventListener("click", () => { 
+  const smile = document.querySelector(".smileImg");
+
+  newGame.addEventListener("click", () => {
     gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
     genarateBombs();
@@ -20,22 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     paintBoard();
   });
   easy.addEventListener("click", () => {
-    BOMBS_COUNT = 3;
-    gameBoard = [];
-    generateBoard(WIDTH, HEIGTH);
-    genarateBombs();
-    setNumbersInCell();
-    paintBoard();
-  });
-  medium.addEventListener("click", () => {
-    BOMBS_COUNT = 5;
-    gameBoard = [];
-    generateBoard(WIDTH, HEIGTH);
-    genarateBombs();
-    setNumbersInCell();
-    paintBoard();
-  });
-  hard.addEventListener("click", () => {
+    WIDTH = 8;
+    HEIGTH = 8;
     BOMBS_COUNT = 10;
     gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
@@ -43,10 +29,30 @@ document.addEventListener("DOMContentLoaded", () => {
     setNumbersInCell();
     paintBoard();
   });
-  
-  function generateBoard(width, heigth) { 
+  medium.addEventListener("click", () => {
+    WIDTH = 12;
+    HEIGTH = 12;
+    BOMBS_COUNT = 15;
+    gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
+  hard.addEventListener("click", () => {
+    WIDTH = 16;
+    HEIGTH = 16;
+    BOMBS_COUNT = 22;
+    gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
+
+  function generateBoard(width, heigth) {
     state.gameOver = false;
-    smile.src = 'src/assets/smile.png'
+    smile.src = "src/assets/smile.png";
     for (let row = 0; row < heigth; row++) {
       const rows = [];
       for (let column = 0; column < width; column++) {
@@ -61,16 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function paintBoard() { 
+  function paintBoard() {
     document.getElementById("board")?.remove();
     const board = document.createElement("div");
-    board.setAttribute("id", "board"); 
+    board.setAttribute("id", "board");
     gameBoard.forEach((row, indexRow) => {
       let paintRow = document.createElement("div");
       paintRow.id = "row";
       row.forEach((cell, indexColumn) => {
         let paintCell = document.createElement("div");
-        paintCell.id = "cell"; 
+        paintCell.id = "cell";
         paintCell.addEventListener("click", () => {
           // winCondition(cell)
           if (paintCell.innerHTML == "🚩") {
@@ -78,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           if (state.gameOver == true) {
             paintCell.removeEventListener();
-          } 
+          }
           handleClick(cell, indexRow, indexColumn);
         });
         paintCell.addEventListener(
@@ -87,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             if (state.gameOver == true) {
               paintCell.removeEventListener();
-            } 
+            }
             if (paintCell.innerHTML == "🚩") {
               cell.isFlagged = false;
               paintCell.innerHTML = "";
@@ -98,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
               paintCell.innerHTML = "🚩";
               return false;
             }
-            
           },
           false
         );
@@ -236,9 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       alert("Game Over");
       state.gameOver = true;
-      if(state.gameOver == true){
-        smile.src = 'src/assets/deadsmile.png'
-      } 
+      if (state.gameOver == true) {
+        smile.src = "src/assets/deadsmile.png";
+      }
       paintBoard();
       return;
     }
