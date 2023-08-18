@@ -33,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const state = {
     gameOver: false,
   };
-  function generateBoard(width, heigth) {
+  function generateBoard(width, heigth) { 
+    state.gameOver = false;
     for (let row = 0; row < heigth; row++) {
       const rows = [];
       for (let column = 0; column < width; column++) {
@@ -48,27 +49,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function paintBoard() {
+  function paintBoard() { 
     document.getElementById("board")?.remove();
     const board = document.createElement("div");
-    board.setAttribute("id", "board");
+    board.setAttribute("id", "board"); 
     gameBoard.forEach((row, indexRow) => {
       let paintRow = document.createElement("div");
       paintRow.id = "row";
       row.forEach((cell, indexColumn) => {
         let paintCell = document.createElement("div");
-        paintCell.id = "cell";
+        paintCell.id = "cell"; 
         paintCell.addEventListener("click", () => {
           // winCondition(cell)
           if (paintCell.innerHTML == "🚩") {
             paintCell.removeEventListener();
           }
+          if (state.gameOver == true) {
+            paintCell.removeEventListener();
+          } 
           handleClick(cell, indexRow, indexColumn);
         });
         paintCell.addEventListener(
           "contextmenu",
           (e) => {
             e.preventDefault();
+            if (state.gameOver == true) {
+              paintCell.removeEventListener();
+            } 
             if (paintCell.innerHTML == "🚩") {
               cell.isFlagged = false;
               paintCell.innerHTML = "";
@@ -79,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
               paintCell.innerHTML = "🚩";
               return false;
             }
+            
           },
           false
         );
