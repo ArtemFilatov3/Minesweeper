@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   let gameBoard = [];
   let BOMBS_COUNT = 10;
-  const WIDTH = 8;
-  const HEIGTH = 8;
+  let WIDTH = 8;
+  let HEIGTH = 8;
   const easy = document.querySelector("#easy");
   const medium = document.querySelector("#medium");
   const hard = document.querySelector("#Hard");
@@ -109,6 +109,18 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
           case 4:
             paintCell.style.color = "darkblue";
+            break;
+          case 5:
+            paintCell.style.color = "brown";
+            break;
+          case 6:
+            paintCell.style.color = "turquoise";
+            break;
+          case 7:
+            paintCell.style.color = "black";
+            break;
+          case 8:
+            paintCell.style.color = "burlywood";
             break;
         }
         paintRow.append(paintCell);

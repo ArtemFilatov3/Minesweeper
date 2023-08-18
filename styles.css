@@ -2,13 +2,12 @@ body {
   font-family: Arial, Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: center;
-  
 }
 #board {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  align-items: center
+  align-items: center; 
 }
 
 #row {
@@ -16,13 +15,24 @@ body {
   gap: 1px;
 }
 #cell {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   background-color: lightgray;
-  border : 1px solid black
-} 
-.button-difficult{
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.button-difficult {
   background-color: whitesmoke;
   border: wheat;
-  
+  margin: 5px;
+}
+.buttons-wrapper { 
+  display: flex;
+  /* align-content: flex-start;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column; */
 }
