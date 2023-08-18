@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setNumbersInCell();
     paintBoard();
   });
-
+  const state = {
+    gameOver: false,
+  };
   function generateBoard(width, heigth) {
     for (let row = 0; row < heigth; row++) {
       const rows = [];
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
           paintCell.innerHTML = "🚩";
         }
         if (cell.isBombed && cell.isOpened) {
-          paintCell.innerHTML = "x";
+          paintCell.innerHTML = "💣";
         }
         if (cell.number && !cell.isBombed && cell.isOpened) {
           paintCell.innerHTML = cell.number;
@@ -94,6 +96,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (cell.isBombed && cell.number) {
           cell.number = 0;
+        }
+        switch (cell.number) {
+          case 1:
+            paintCell.style.color = "blue";
+            break;
+          case 2:
+            paintCell.style.color = "green";
+            break;
+          case 3:
+            paintCell.style.color = "red";
+            break;
+          case 4:
+            paintCell.style.color = "darkblue";
+            break;
         }
         paintRow.append(paintCell);
       });
@@ -187,33 +203,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
       alert("Game Over");
+      state.gameOver = true;
       paintBoard();
       return;
     }
     if (cell.number == 0 && !cell.isOpened) {
       cell.isOpened = true;
       if (gameBoard[y][x + 1]) {
-        handleClick(gameBoard[y][x + 1], y, x + 1); // проверка вправо
+        handleClick(gameBoard[y][x + 1], y, x + 1);
+        // проверка вправо
       }
       if (gameBoard[y][x - 1]) {
-        handleClick(gameBoard[y][x - 1], y, x - 1); // проверка влево
+        handleClick(gameBoard[y][x - 1], y, x - 1);
+        // проверка влево
       }
-      if (gameBoard[y - 1] && gameBoard[y - 1][x]) { // проверка вверх
+      if (gameBoard[y - 1] && gameBoard[y - 1][x]) {
+        // проверка вверх
         handleClick(gameBoard[y - 1][x], y - 1, x);
       }
-      if (gameBoard[y + 1] && gameBoard[y + 1][x]) { // проверка вниз
+      if (gameBoard[y + 1] && gameBoard[y + 1][x]) {
+        // проверка вниз
         handleClick(gameBoard[y + 1][x], y + 1, x);
       }
-      if (gameBoard[y + 1] && gameBoard[y + 1][x + 1]) { // проверка вниз-вправо
-        handleClick(gameBoard[y + 1][x + 1], y + 1, x + 1); 
+      if (gameBoard[y + 1] && gameBoard[y + 1][x + 1]) {
+        // проверка вниз-вправо
+        handleClick(gameBoard[y + 1][x + 1], y + 1, x + 1);
       }
-      if (gameBoard[y - 1] && gameBoard[y - 1][x + 1]) { // проверка вверх-вправо
+      if (gameBoard[y - 1] && gameBoard[y - 1][x + 1]) {
+        // проверка вверх-вправо
         handleClick(gameBoard[y - 1][x + 1], y - 1, x + 1);
       }
-      if (gameBoard[y + 1] && gameBoard[y + 1][x - 1]) { // проверка вниз-влево
+      if (gameBoard[y + 1] && gameBoard[y + 1][x - 1]) {
+        // проверка вниз-влево
         handleClick(gameBoard[y + 1][x - 1], y + 1, x - 1);
       }
-      if (gameBoard[y - 1] && gameBoard[y - 1][x - 1]) { // проверка вверх-влево
+      if (gameBoard[y - 1] && gameBoard[y - 1][x - 1]) {
+        // проверка вверх-влево
         handleClick(gameBoard[y - 1][x - 1], y - 1, x - 1);
       }
 

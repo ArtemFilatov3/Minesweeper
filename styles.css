@@ -21,3 +21,8 @@ body {
   background-color: lightgray;
   border : 1px solid black
 } 
+.button-difficult{
+  background-color: whitesmoke;
+  border: wheat;
+  
+}
