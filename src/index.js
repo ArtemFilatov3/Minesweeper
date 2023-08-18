@@ -239,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       });
-      alert("Game Over");
       state.gameOver = true;
       if (state.gameOver == true) {
         smile.src = "src/assets/deadsmile.png";
