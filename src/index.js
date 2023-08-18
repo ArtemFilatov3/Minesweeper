@@ -3,9 +3,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let BOMBS_COUNT = 10;
   let WIDTH = 8;
   let HEIGTH = 8;
+  const state = {
+    gameOver: false,
+  };
   const easy = document.querySelector("#easy");
   const medium = document.querySelector("#medium");
   const hard = document.querySelector("#Hard");
+  const newGame = document.querySelector(".smile");
+  const smile = document.querySelector('.smileImg') 
+  
+  newGame.addEventListener("click", () => { 
+    gameBoard = [];
+    generateBoard(WIDTH, HEIGTH);
+    genarateBombs();
+    setNumbersInCell();
+    paintBoard();
+  });
   easy.addEventListener("click", () => {
     BOMBS_COUNT = 3;
     gameBoard = [];
@@ -30,11 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setNumbersInCell();
     paintBoard();
   });
-  const state = {
-    gameOver: false,
-  };
+  
   function generateBoard(width, heigth) { 
     state.gameOver = false;
+    smile.src = 'src/assets/smile.png'
     for (let row = 0; row < heigth; row++) {
       const rows = [];
       for (let column = 0; column < width; column++) {
@@ -224,6 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       alert("Game Over");
       state.gameOver = true;
+      if(state.gameOver == true){
+        smile.src = 'src/assets/deadsmile.png'
+      } 
       paintBoard();
       return;
     }
