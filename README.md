@@ -1,5 +1,5 @@
 # Minesweeper 
-###Implementation of classic game 
+### Implementation of classic game 
 #
 ![](src/assets/screen.png)
 
