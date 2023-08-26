@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("flags")?.remove();
     const flagsNumber = document.createElement("div");
     flagsNumber.setAttribute("id", "flags");
-    flagsCount = 10 - flags.length;
+    flagsCount = BOMBS_COUNT - flags.length;
     flagsNumber.innerHTML = ` 🚩 ${flagsCount}/${BOMBS_COUNT}`;
     document.body.prepend(flagsNumber);
   }
