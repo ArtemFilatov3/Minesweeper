@@ -2,12 +2,15 @@ body {
   font-family: Arial, Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #board {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  align-items: center; 
+  align-items: center;
 }
 
 #row {
@@ -30,21 +33,56 @@ body {
   margin: 5px;
   cursor: pointer;
 }
-.buttons-wrapper { 
+.buttons-wrapper {
   display: flex;
   /* align-content: flex-start;
   flex-wrap: wrap;
   align-items: stretch;
   flex-direction: column; */
 }
-.smile img{
+.smile img {
   width: 50px;
   height: 50px;
   background-color: white;
   border: none;
   cursor: pointer;
 }
-.smile{
+.smile {
   background-color: white;
   border: none;
+}
+.modalWin {
+  /* display: none; */
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all 0.2s;
+  justify-content: space-around;
+  align-items: center;
+}
+.modalWin.active {
+  opacity: 1;
+  pointer-events: all;
+  transition: 0.5s all;
+}
+.wrapper {
+  background-color: white;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.winBtn {
+  margin-top: 10px;
+  max-width: 150px;
+  color: black;
+  border: none;
+  cursor: pointer;
 }
