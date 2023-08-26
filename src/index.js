@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   let gameBoard = [];
   let BOMBS_COUNT = 10;
+  let flagsCount = BOMBS_COUNT;
   let WIDTH = 8;
   let HEIGTH = 8;
   const state = {
@@ -11,13 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const hard = document.querySelector("#Hard");
   const newGame = document.querySelector(".smile");
   const smile = document.querySelector(".smileImg");
-
   newGame.addEventListener("click", () => {
     gameBoard = [];
     generateBoard(WIDTH, HEIGTH);
     genarateBombs();
     setNumbersInCell();
     paintBoard();
+    flagsCount = BOMBS_COUNT;
+    paintFlags();
   });
   easy.addEventListener("click", () => {
     WIDTH = 8;
@@ -28,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     genarateBombs();
     setNumbersInCell();
     paintBoard();
+    flagsCount = BOMBS_COUNT;
+    paintFlags();
   });
   medium.addEventListener("click", () => {
     WIDTH = 12;
@@ -38,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
     genarateBombs();
     setNumbersInCell();
     paintBoard();
+    flagsCount = BOMBS_COUNT;
+    paintFlags();
   });
   hard.addEventListener("click", () => {
     WIDTH = 16;
@@ -48,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
     genarateBombs();
     setNumbersInCell();
     paintBoard();
+    flagsCount = BOMBS_COUNT;
+    paintFlags();
   });
 
   function generateBoard(width, heigth) {
@@ -78,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let paintCell = document.createElement("div");
         paintCell.id = "cell";
         paintCell.addEventListener("click", () => {
-          // winCondition(cell)
           if (paintCell.innerHTML == "🚩") {
             paintCell.removeEventListener();
           }
@@ -97,16 +104,22 @@ document.addEventListener("DOMContentLoaded", () => {
             if (paintCell.innerHTML == "🚩") {
               cell.isFlagged = false;
               paintCell.innerHTML = "";
+              paintFlags();
               return false;
             }
             if (!cell.isOpened) {
+              if (flagsCount === 0) {
+                return;
+              }
               cell.isFlagged = true;
               paintCell.innerHTML = "🚩";
+              paintFlags();
               return false;
             }
           },
           false
         );
+
         if (cell.isFlagged) {
           paintCell.innerHTML = "🚩";
         }
@@ -121,6 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (cell.isBombed && cell.number) {
           cell.number = 0;
+        }
+        if (cell.isFlagged && cell.isBombed && !cell.isOpened && !cell.number) {
         }
         switch (cell.number) {
           case 1:
@@ -213,21 +228,57 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-  // function winCondition(cell) {
-  //   if(cell.isFlagged && cell.isBombed){
-  //     alert('Success!!')
-  //   }
-  // }
-
+  function paintFlags() {
+    let flagsWithBombs = [];
+    let flags = [];
+    gameBoard.forEach((e) => {
+      e.forEach((cell) => {
+        if (cell.isFlagged && !cell.isOpened) {
+          flags.push("1");
+        }
+        if (cell.isBombed && cell.isFlagged) flagsWithBombs.push("2");
+      });
+    });
+    if (flagsWithBombs.length === BOMBS_COUNT) {
+      const modalWin = document.createElement("div");
+      modalWin.classList.add("modalWin");
+      modalWin.innerHTML = `<div class='wrapper'>
+          <p>Вы победили!</p>
+          <button class='winBtn'>Начать заново</button>
+    </div>`;
+      document.body.append(modalWin);
+      const restart = document.querySelector(".winBtn");
+      modalWin.classList.add("active");
+      console.log(restart);
+      restart.addEventListener("click", () => {
+        document.querySelector(".modalWin").remove();
+        gameBoard = [];
+        generateBoard(WIDTH, HEIGTH);
+        genarateBombs();
+        setNumbersInCell();
+        paintBoard();
+        flagsCount = BOMBS_COUNT;
+        paintFlags();
+      });
+    }
+    console.log(flagsWithBombs);
+    document.getElementById("flags")?.remove();
+    const flagsNumber = document.createElement("div");
+    flagsNumber.setAttribute("id", "flags");
+    flagsCount = BOMBS_COUNT - flags.length;
+    flagsNumber.innerHTML = ` 🚩 ${flagsCount}/${BOMBS_COUNT}`;
+    document.body.prepend(flagsNumber);
+  }
   generateBoard(WIDTH, HEIGTH);
   genarateBombs();
   setNumbersInCell();
   paintBoard();
+  paintFlags();
 
   function handleClick(cell, y, x) {
-    console.log(cell);
     if (cell.number) {
       cell.isOpened = true;
+      paintFlags();
       paintBoard();
       return;
     }
@@ -239,16 +290,18 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       });
-      alert("Game Over");
       state.gameOver = true;
       if (state.gameOver == true) {
         smile.src = "src/assets/deadsmile.png";
       }
+      paintFlags();
       paintBoard();
       return;
     }
     if (cell.number == 0 && !cell.isOpened) {
       cell.isOpened = true;
+      cell.isFlagged = false;
+      paintFlags();
       if (gameBoard[y][x + 1]) {
         handleClick(gameBoard[y][x + 1], y, x + 1);
         // проверка вправо
