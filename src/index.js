@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cell.isBombed && cell.isFlagged) flagsWithBombs.push("2");
       });
     });
-    if (flagsWithBombs.length === 10) {
+    if (flagsWithBombs.length === BOMBS_COUNT) {
       const modalWin = document.createElement("div");
       modalWin.classList.add("modalWin");
       modalWin.innerHTML = `<div class='wrapper'>
@@ -251,16 +251,15 @@ document.addEventListener("DOMContentLoaded", () => {
       modalWin.classList.add("active");
       console.log(restart);
       restart.addEventListener("click", () => {
-        document.querySelector('.modalWin').remove() 
+        document.querySelector(".modalWin").remove();
         gameBoard = [];
         generateBoard(WIDTH, HEIGTH);
         genarateBombs();
         setNumbersInCell();
         paintBoard();
         flagsCount = BOMBS_COUNT;
-        paintFlags(); 
+        paintFlags();
       });
-     
     }
     console.log(flagsWithBombs);
     document.getElementById("flags")?.remove();
