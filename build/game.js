@@ -1,17 +1,19 @@
 export class Game {
-    state = false
-    gameBoard = []
+    state = false;
+    gameBoard = [];
     smile = document.querySelector(".smileImg");
-
+    BOMBS_COUNT;
+    flagsCount;
+    WIDTH;
+    HEIGHT;
     constructor(bombs_count, WIDTH, HEIGHT) {
-        this.BOMBS_COUNT = bombs_count
-        this.flagsCount = bombs_count
-        this.WIDTH = WIDTH
-        this.HEIGHT = HEIGHT
+        this.BOMBS_COUNT = bombs_count;
+        this.flagsCount = bombs_count;
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
     }
-
     render() {
-        this.gameBoard = []
+        this.gameBoard = [];
         this.generateBoard();
         this.generateBombs();
         this.setNumbersInCell();
@@ -19,7 +21,6 @@ export class Game {
         this.flagsCount = this.BOMBS_COUNT;
         this.paintFlags();
     }
-
     generateBoard() {
         this.state = false;
         this.smile.src = "src/assets/smile.png";
@@ -36,7 +37,17 @@ export class Game {
             this.gameBoard.push(rows);
         }
     }
-
+    addListenersForCell(paintCell, cell, indexRow, indexColumn) {
+        paintCell.addEventListener("click", () => {
+            if (paintCell.innerHTML === "🚩") {
+                paintCell.removeEventListener("click", () => this.addListenersForCell(paintCell, cell, indexRow, indexColumn));
+            }
+            if (this.state === true) {
+                paintCell.removeEventListener("click", () => this.addListenersForCell(paintCell, cell, indexRow, indexColumn));
+            }
+            this.handleClick(cell, indexRow, indexColumn);
+        });
+    }
     paintBoard() {
         document.getElementById("board")?.remove();
         const board = document.createElement("div");
@@ -47,41 +58,38 @@ export class Game {
             row.forEach((cell, indexColumn) => {
                 let paintCell = document.createElement("div");
                 paintCell.id = "cell";
-                paintCell.addEventListener("click", () => {
-                    if (paintCell.innerHTML === "🚩") {
-                        paintCell.removeEventListener();
-                    }
+                this.addListenersForCell(paintCell, cell, indexRow, indexColumn);
+                // paintCell.addEventListener("click", () => {
+                //   if (paintCell.innerHTML === "🚩") {
+                //     paintCell.removeEventListener('click',void);
+                //   }
+                //   if (this.state === true) {
+                //     paintCell.removeEventListener();
+                //   }
+                //   this.handleClick(cell, indexRow, indexColumn);
+                // });
+                paintCell.addEventListener("contextmenu", (e) => {
+                    e.preventDefault();
                     if (this.state === true) {
+                        //@ts-ignore
                         paintCell.removeEventListener();
                     }
-                    this.handleClick(cell, indexRow, indexColumn);
-                });
-                paintCell.addEventListener(
-                    "contextmenu",
-                    (e) => {
-                        e.preventDefault();
-                        if (this.state === true) {
-                            paintCell.removeEventListener();
+                    if (paintCell.innerHTML === "🚩") {
+                        cell.isFlagged = false;
+                        paintCell.innerHTML = "";
+                        this.paintFlags();
+                        return false;
+                    }
+                    if (!cell.isOpened) {
+                        if (this.flagsCount === 0) {
+                            return;
                         }
-                        if (paintCell.innerHTML === "🚩") {
-                            cell.isFlagged = false;
-                            paintCell.innerHTML = "";
-                            this.paintFlags();
-                            return false;
-                        }
-                        if (!cell.isOpened) {
-                            if (this.flagsCount === 0) {
-                                return;
-                            }
-                            cell.isFlagged = true;
-                            paintCell.innerHTML = "🚩";
-                            this.paintFlags();
-                            return false;
-                        }
-                    },
-                    false
-                );
-
+                        cell.isFlagged = true;
+                        paintCell.innerHTML = "🚩";
+                        this.paintFlags();
+                        return false;
+                    }
+                }, false);
                 if (cell.isFlagged) {
                     paintCell.innerHTML = "🚩";
                 }
@@ -89,7 +97,7 @@ export class Game {
                     paintCell.innerHTML = "💣";
                 }
                 if (cell.number && !cell.isBombed && cell.isOpened) {
-                    paintCell.innerHTML = cell.number;
+                    paintCell.innerHTML = String(cell.number);
                 }
                 if (cell.isOpened) {
                     paintCell.style.backgroundColor = "white";
@@ -129,10 +137,8 @@ export class Game {
             });
             board.append(paintRow);
         });
-
         document.body.append(board);
     }
-
     generateBombs() {
         let bombsRemaining = this.BOMBS_COUNT;
         while (bombsRemaining > 0) {
@@ -145,52 +151,46 @@ export class Game {
             }
         }
     }
-
     setNumbersInCell() {
         this.gameBoard.forEach((row, indexRow) => {
             row.forEach((cell, indexColumn) => {
                 if (cell.isBombed) {
-                    if (
-                        this.gameBoard[indexRow - 1] &&
-                        this.gameBoard[indexRow - 1][indexColumn - 1]
-                    ) {
+                    if (this.gameBoard[indexRow - 1] &&
+                        this.gameBoard[indexRow - 1][indexColumn - 1]) {
                         this.gameBoard[indexRow - 1][indexColumn - 1].number += 1;
                     }
-                    if (this.gameBoard[indexRow - 1] && this.gameBoard[indexRow - 1][indexColumn]) {
+                    if (this.gameBoard[indexRow - 1] &&
+                        this.gameBoard[indexRow - 1][indexColumn]) {
                         this.gameBoard[indexRow - 1][indexColumn].number += 1;
                     }
-                    if (
-                        this.gameBoard[indexRow - 1] &&
-                        this.gameBoard[indexRow - 1][indexColumn + 1]
-                    ) {
+                    if (this.gameBoard[indexRow - 1] &&
+                        this.gameBoard[indexRow - 1][indexColumn + 1]) {
                         this.gameBoard[indexRow - 1][indexColumn + 1].number += 1;
                     }
-                    if (this.gameBoard[indexRow] && this.gameBoard[indexRow][indexColumn - 1]) {
+                    if (this.gameBoard[indexRow] &&
+                        this.gameBoard[indexRow][indexColumn - 1]) {
                         this.gameBoard[indexRow][indexColumn - 1].number += 1;
                     }
-                    if (this.gameBoard[indexRow] && this.gameBoard[indexRow][indexColumn + 1]) {
+                    if (this.gameBoard[indexRow] &&
+                        this.gameBoard[indexRow][indexColumn + 1]) {
                         this.gameBoard[indexRow][indexColumn + 1].number += 1;
                     }
-                    if (
-                        this.gameBoard[indexRow + 1] &&
-                        this.gameBoard[indexRow + 1][indexColumn - 1]
-                    ) {
+                    if (this.gameBoard[indexRow + 1] &&
+                        this.gameBoard[indexRow + 1][indexColumn - 1]) {
                         this.gameBoard[indexRow + 1][indexColumn - 1].number += 1;
                     }
-                    if (this.gameBoard[indexRow + 1] && this.gameBoard[indexRow + 1][indexColumn]) {
+                    if (this.gameBoard[indexRow + 1] &&
+                        this.gameBoard[indexRow + 1][indexColumn]) {
                         this.gameBoard[indexRow + 1][indexColumn].number += 1;
                     }
-                    if (
-                        this.gameBoard[indexRow + 1] &&
-                        this.gameBoard[indexRow + 1][indexColumn + 1]
-                    ) {
+                    if (this.gameBoard[indexRow + 1] &&
+                        this.gameBoard[indexRow + 1][indexColumn + 1]) {
                         this.gameBoard[indexRow + 1][indexColumn + 1].number += 1;
                     }
                 }
             });
         });
     }
-
     paintFlags() {
         let flagsWithBombs = [];
         let flags = [];
@@ -199,7 +199,8 @@ export class Game {
                 if (cell.isFlagged && !cell.isOpened) {
                     flags.push("1");
                 }
-                if (cell.isBombed && cell.isFlagged) flagsWithBombs.push("2");
+                if (cell.isBombed && cell.isFlagged)
+                    flagsWithBombs.push("2");
             });
         });
         if (flagsWithBombs.length === this.BOMBS_COUNT) {
@@ -212,10 +213,12 @@ export class Game {
             document.body.append(modalWin);
             const restart = document.querySelector(".winBtn");
             modalWin.classList.add("active");
-            restart.addEventListener("click", () => {
-                document.querySelector(".modalWin").remove();
-                this.render()
-            });
+            if (restart) {
+                restart.addEventListener("click", () => {
+                    document.querySelector(".modalWin").remove();
+                    this.render();
+                });
+            }
         }
         document.getElementById("flags")?.remove();
         const flagsNumber = document.createElement("div");
@@ -224,7 +227,6 @@ export class Game {
         flagsNumber.innerHTML = ` 🚩 ${this.flagsCount}/${this.BOMBS_COUNT}`;
         document.body.prepend(flagsNumber);
     }
-
     handleClick(cell, y, x) {
         if (cell.number) {
             cell.isOpened = true;
@@ -284,9 +286,7 @@ export class Game {
                 // проверка вверх-влево
                 this.handleClick(this.gameBoard[y - 1][x - 1], y - 1, x - 1);
             }
-
             this.paintBoard();
         }
     }
-
 }
