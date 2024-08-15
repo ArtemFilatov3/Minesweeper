@@ -1,0 +1,23 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "![](src/assets/screen.png)",
+  "main": "init.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtemSyulatov/Minesweeper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArtemSyulatov/Minesweeper/issues"
+  },
+  "homepage": "https://github.com/ArtemSyulatov/Minesweeper#readme",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
