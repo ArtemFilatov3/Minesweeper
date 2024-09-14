@@ -83,15 +83,17 @@ export class Game implements GameTypes {
         let paintCell = document.createElement("div");
         paintCell.id = "cell";
         this.addListenersForCell(paintCell, cell, indexRow, indexColumn);
-        // paintCell.addEventListener("click", () => {
-        //   if (paintCell.innerHTML === "🚩") {
-        //     paintCell.removeEventListener('click',void);
-        //   }
-        //   if (this.state === true) {
-        //     paintCell.removeEventListener();
-        //   }
-        //   this.handleClick(cell, indexRow, indexColumn);
-        // });
+        paintCell.addEventListener("click", () => {
+          if (paintCell.innerHTML === "🚩") {
+            //@ts-ignore
+            paintCell.removeEventListener("click");
+          }
+          if (this.state === true) {
+            //@ts-ignore
+            paintCell.removeEventListener();
+          }
+          this.handleClick(cell, indexRow, indexColumn);
+        });
         paintCell.addEventListener(
           "contextmenu",
           (e) => {
@@ -278,7 +280,7 @@ export class Game implements GameTypes {
     document.body.prepend(flagsNumber);
   }
 
-  handleClick(cell:Tile, y:number, x:number) {
+  handleClick(cell: Tile, y: number, x: number) {
     if (cell.number) {
       cell.isOpened = true;
       this.paintFlags();
